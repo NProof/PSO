@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <cmath>
 
 #include "Vector.h"
 #include "Particle.h"
@@ -17,6 +18,17 @@ std::ostream & operator<<(std::ostream & os, const Vector & obj) {
     }
     os << ">";
     return os;
+}
+
+double Rastrigin(Vector v)
+{
+    double sum_f = .0;
+    vector<double> vals = v.Getvals();
+    for (int d = 0; d < v.Getdim(); ++d) {
+        double dp = vals[d];
+        sum_f += -10*cos(2*dp*M_PI)+dp*dp+10;
+    }
+	return sum_f;
 }
 
 int main() {
@@ -37,6 +49,7 @@ int main() {
 
     for(auto p : particles) {
         cout << p.Getposition() << p.Getvelocity() << "\n";
+        cout << "F: " << Rastrigin(p.Getposition()) << "\n";
     }
     return 0;
 }
