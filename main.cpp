@@ -49,9 +49,17 @@ int main() {
     }
 
     Problem problem(Rastrigin);
+
+    Vector gBest(particles[0].Getposition());
+
     for(auto p : particles) {
         cout << p.Getposition() << p.Getvelocity() << "\n";
         cout << "F: " << problem.fitness(p.Getposition()) << "\n";
+        if (problem.fitness(p.Getposition()) < problem.fitness(gBest)) {
+            gBest = p.Getposition();
+            cout << "UPDATE gBest: " << gBest << "\n";
+        }
+    }
     }
     return 0;
 }
