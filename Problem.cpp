@@ -1,8 +1,9 @@
 #include "Problem.h"
 
-Problem::Problem(double (*fun_ptr)(Vector))
+Problem::Problem(double (*fun_ptr)(Vector), std::vector<std::pair<double, double> > & c)
 {
     this->fun_ptr = fun_ptr;
+    this->c = c;
 }
 
 Problem::~Problem()

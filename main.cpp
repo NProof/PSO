@@ -33,19 +33,21 @@ double Rastrigin(Vector v)
 }
 
 int main() {
-    Problem problem(Rastrigin);
-    double max = 3.0, min = -3.0;
+    std::vector<std::pair<double, double> > conditionRang;
+    conditionRang.push_back(std::make_pair(3.0, -3.0));
+    Problem problem(Rastrigin, conditionRang);
+//    double max = problem, min = -3.0;
     double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
 
     std::vector<Particle *> particles;
     double tmp_vals[DIM_SPACE];
     for (int x = 0; x < P_SIZE; ++x) {
         for (int d = 0; d < DIM_SPACE; ++d) {
-            tmp_vals[d] = (max - min) * rand() / (RAND_MAX + 1.0) + min;
+            tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
         }
         Vector tmp_pos(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
         for (int d = 0; d < DIM_SPACE; ++d) {
-            tmp_vals[d] = (max - min) * rand() / (RAND_MAX + 1.0) + min;
+            tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
         }
         Vector tmp_vel(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
         particles.push_back(new Particle(tmp_pos, tmp_vel));
