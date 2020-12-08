@@ -9,11 +9,11 @@ class Particle
         Particle(Vector &, Vector &);
         virtual ~Particle();
 
-        Vector Getposition() { return position; }
+        Vector Getposition() const { return position; }
         void Setposition(Vector & val) { position = val; }
-        Vector Getvelocity() { return velocity; }
+        Vector Getvelocity() const { return velocity; }
         void Setvelocity(Vector & val) { velocity = val; }
-        Vector GetbkPosition() { return bkPosition; }
+        Vector GetbkPosition() const { return bkPosition; }
         void SetbkPosition(Vector & val) { bkPosition = val; }
 
     protected:

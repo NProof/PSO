@@ -60,6 +60,17 @@ int main() {
             cout << "UPDATE gBest: " << gBest << "\n";
         }
     }
+
+    double w = 0.8, c1 = 1.2, c2 = 0.6;
+
+    for(auto p : particles) {
+//        w * p.Getvelocity();
+        Vector new_velocity = p->Getvelocity() * w
+            + (p->GetbkPosition() - p->Getposition()) * c1
+            + (gBest - p->Getposition()) * c2;
+        cout << "B : " << (p->Getvelocity()) << " & " << new_velocity << endl;
+        p->Setvelocity(new_velocity);
+        cout << "F : " << (p->Getvelocity()) << endl;
     }
     return 0;
 }

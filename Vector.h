@@ -18,11 +18,45 @@ class Vector
         void Setvals(std::vector<double> val) { vals = val; }
 
         friend std::ostream & operator<<(std::ostream & os, const Vector & obj);
+
+//        friend Vector operator*(double m, Vector & v);
+
+        Vector operator*(double m) {
+            double new_vals[dim];
+            for(int d = 0; d < dim; ++d) {
+                new_vals[d] = vals[d] * m;
+            }
+            return Vector(dim, std::vector<double>(new_vals, new_vals + dim));
+        }
+
+        Vector operator-(const Vector & oth) {
+            double new_vals[dim];
+            auto oth_vals = oth.Getvals();
+            for(int d = 0; d < dim; ++d) {
+                new_vals[d] = vals[d] - oth_vals[d];
+            }
+            return Vector(dim, std::vector<double>(new_vals, new_vals + dim));
+        }
+
+        Vector operator+(const Vector & oth) {
+            double new_vals[dim];
+            auto oth_vals = oth.Getvals();
+            for(int d = 0; d < dim; ++d) {
+                new_vals[d] = vals[d] + oth_vals[d];
+            }
+            return Vector(dim, std::vector<double>(new_vals, new_vals + dim));
+        }
+
     protected:
 
     private:
         unsigned int dim;
         std::vector<double> vals;
 };
+
+//Vector operator*(double m, Vector & v) {
+//    Vector tmp = v * m;
+//    return tmp;
+//}
 
 #endif // VECTOR_H
