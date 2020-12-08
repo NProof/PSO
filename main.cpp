@@ -33,8 +33,11 @@ double Rastrigin(Vector v)
 }
 
 int main() {
-    std::vector<Particle *> particles;
+    Problem problem(Rastrigin);
     double max = 3.0, min = -3.0;
+    double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
+
+    std::vector<Particle *> particles;
     double tmp_vals[DIM_SPACE];
     for (int x = 0; x < P_SIZE; ++x) {
         for (int d = 0; d < DIM_SPACE; ++d) {
@@ -48,22 +51,9 @@ int main() {
         particles.push_back(new Particle(tmp_pos, tmp_vel));
     }
 
-    Problem problem(Rastrigin);
-
     Vector gBest(particles[0]->Getposition());
 
-//    for(auto p : particles) {
-//        cout << p->Getposition() << p->Getvelocity() << "\n";
-//        cout << "F: " << problem.fitness(p->Getposition()) << "\n";
-//        if (problem.fitness(p->Getposition()) < problem.fitness(gBest)) {
-//            gBest = p->Getposition();
-//            cout << "UPDATE gBest: " << gBest << "\n";
-//        }
-//    }
-
-    double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
-
-    cout << "--------- Trans ---------- " << endl;
+//    cout << "--------- Trans ---------- " << endl;
 
     for(auto p : particles) {
         Vector new_velocity = p->Getvelocity() * w
@@ -78,10 +68,10 @@ int main() {
 
         if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
             p->SetbkPosition(new_position);
-            cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
+//            cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
             if (problem.fitness(new_position) < problem.fitness(gBest)) {
                 gBest = p->Getposition();
-                cout << "UPDATE gBest: " << gBest << "\n";
+//                cout << "UPDATE gBest: " << gBest << "\n";
             }
         }
     }
