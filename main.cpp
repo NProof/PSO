@@ -33,7 +33,7 @@ double Rastrigin(Vector v)
 }
 
 int main() {
-    std::vector<Particle> particles;
+    std::vector<Particle *> particles;
     double max = 3.0, min = -3.0;
     double tmp_vals[DIM_SPACE];
     for (int x = 0; x < P_SIZE; ++x) {
@@ -45,18 +45,18 @@ int main() {
             tmp_vals[d] = (max - min) * rand() / (RAND_MAX + 1.0) + min;
         }
         Vector tmp_vel(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
-        particles.push_back(Particle(tmp_pos, tmp_vel));
+        particles.push_back(new Particle(tmp_pos, tmp_vel));
     }
 
     Problem problem(Rastrigin);
 
-    Vector gBest(particles[0].Getposition());
+    Vector gBest(particles[0]->Getposition());
 
     for(auto p : particles) {
-        cout << p.Getposition() << p.Getvelocity() << "\n";
-        cout << "F: " << problem.fitness(p.Getposition()) << "\n";
-        if (problem.fitness(p.Getposition()) < problem.fitness(gBest)) {
-            gBest = p.Getposition();
+        cout << p->Getposition() << p->Getvelocity() << "\n";
+        cout << "F: " << problem.fitness(p->Getposition()) << "\n";
+        if (problem.fitness(p->Getposition()) < problem.fitness(gBest)) {
+            gBest = p->Getposition();
             cout << "UPDATE gBest: " << gBest << "\n";
         }
     }
