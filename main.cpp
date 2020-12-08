@@ -4,6 +4,7 @@
 
 #include "Vector.h"
 #include "Particle.h"
+#include "Problem.h"
 
 #define P_SIZE 7
 #define DIM_SPACE 1
@@ -47,9 +48,10 @@ int main() {
         particles.push_back(Particle(tmp_pos, tmp_vel));
     }
 
+    Problem problem(Rastrigin);
     for(auto p : particles) {
         cout << p.Getposition() << p.Getvelocity() << "\n";
-        cout << "F: " << Rastrigin(p.Getposition()) << "\n";
+        cout << "F: " << problem.fitness(p.Getposition()) << "\n";
     }
     return 0;
 }
