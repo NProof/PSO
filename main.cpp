@@ -52,14 +52,14 @@ int main() {
 
     Vector gBest(particles[0]->Getposition());
 
-    for(auto p : particles) {
-        cout << p->Getposition() << p->Getvelocity() << "\n";
-        cout << "F: " << problem.fitness(p->Getposition()) << "\n";
-        if (problem.fitness(p->Getposition()) < problem.fitness(gBest)) {
-            gBest = p->Getposition();
-            cout << "UPDATE gBest: " << gBest << "\n";
-        }
-    }
+//    for(auto p : particles) {
+//        cout << p->Getposition() << p->Getvelocity() << "\n";
+//        cout << "F: " << problem.fitness(p->Getposition()) << "\n";
+//        if (problem.fitness(p->Getposition()) < problem.fitness(gBest)) {
+//            gBest = p->Getposition();
+//            cout << "UPDATE gBest: " << gBest << "\n";
+//        }
+//    }
 
     double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
 
@@ -69,9 +69,13 @@ int main() {
         Vector new_velocity = p->Getvelocity() * w
             + (p->GetbkPosition() - p->Getposition()) * c1
             + (gBest - p->Getposition()) * c2;
+
         p->Setvelocity(new_velocity);
+
         Vector new_position = p->Getposition() + p->Getvelocity() * lr;
+
         p->Setposition(new_position);
+
         if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
             p->SetbkPosition(new_position);
             cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
@@ -82,15 +86,5 @@ int main() {
         }
     }
 
-    cout << "--------- NEXT ---------- " << endl;
-
-    for(auto p : particles) {
-        cout << p->Getposition() << p->Getvelocity() << "\n";
-        cout << "F: " << problem.fitness(p->Getposition()) << "\n";
-        if (problem.fitness(p->Getposition()) < problem.fitness(gBest)) {
-            gBest = p->Getposition();
-            cout << "UPDATE gBest: " << gBest << "\n";
-        }
-    }
     return 0;
 }
