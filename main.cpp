@@ -36,7 +36,7 @@ int main() {
     std::vector<std::pair<double, double> > conditionRang;
     conditionRang.push_back(std::make_pair(3.0, -3.0));
     Problem problem(Rastrigin, conditionRang);
-//    double max = problem, min = -3.0;
+
     double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
 
     std::vector<Particle *> particles;
