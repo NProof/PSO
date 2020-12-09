@@ -1,6 +1,8 @@
 #include <iostream>
 #include <random>
 #include <cmath>
+#include <fstream>
+#include <iomanip>
 
 #include "Vector.h"
 #include "Particle.h"
@@ -168,8 +170,24 @@ int main() {
         allRecord.push_back(r);
     }
 
-    for (auto r : allRecord) {
-        cout << r._count_Fit << "\t" << r._gBest << "\t" << r._fit << "\n";
+    std::ofstream summaryfile;
+    summaryfile.open("summary.csv");
+
+    double mean_times = .0;
+    double mean_fit = .0;
+    for (int e = 0; e < TIMES_EXP; ++e) {
+        auto r = allRecord[e];
+        mean_times += r._count_Fit;
+        mean_fit += r._fit;
+//        summaryfile << e + 1 << ", " << r._count_Fit << ", " << std::setprecision(20 ) << r._fit << "\n";
+    }
+    mean_times /= TIMES_EXP;
+    mean_fit /= TIMES_EXP;
+
+    summaryfile << 0 << ", " << mean_times << ", " << std::setprecision(20 ) << mean_fit << "\n";
+    for (int e = 0; e < TIMES_EXP; ++e) {
+        auto r = allRecord[e];
+        summaryfile << e + 1 << ", " << r._count_Fit << ", " << std::setprecision(20 ) << r._fit << "\n";
     }
 
     return 0;
