@@ -45,6 +45,17 @@ double Rastrigin(Vector v)
 	return sum_f;
 }
 
+double absVector(Vector v)
+{
+    double sum_f = .0;
+    vector<double> vals = v.Getvals();
+    for (int d = 0; d < v.Getdim(); ++d) {
+        double dp = vals[d];
+        sum_f += abs(dp);
+    }
+	return sum_f;
+}
+
 double Variance(std::vector<Particle *> ps) {
     double mean[DIM_SPACE] = {0};
     for (auto p : ps) {
