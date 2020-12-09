@@ -74,7 +74,7 @@ int main() {
     double vMax = 1.5;
 
     vector<Record> allRecord;
-
+    for(int e = 0; e < TIMES_EXP; ++e) {
         std::vector<Particle *> particles;
         double tmp_vals[DIM_SPACE];
         for (int x = 0; x < P_SIZE; ++x) {
@@ -153,7 +153,8 @@ int main() {
         }
 
         Record r(times * P_SIZE, gBest, problem.fitness(gBest));
-    allRecord.push_back(r);
+        allRecord.push_back(r);
+    }
     cout << r._count_Fit << "\t" << r._gBest << "\t" << r._fit << "\n";
 
     return 0;
