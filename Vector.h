@@ -32,6 +32,14 @@ class Vector
             return Vector(dim, std::vector<double>(new_vals, new_vals + dim));
         }
 
+        Vector operator/(double m) {
+            double new_vals[dim];
+            for(int d = 0; d < dim; ++d) {
+                new_vals[d] = vals[d] / m;
+            }
+            return Vector(dim, std::vector<double>(new_vals, new_vals + dim));
+        }
+
         Vector operator-(const Vector & oth) {
             double new_vals[dim];
             auto oth_vals = oth.Getvals();
