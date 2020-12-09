@@ -60,7 +60,7 @@ int main() {
     conditionRang.push_back(std::make_pair(3.0, -3.0));
     Problem problem(Rastrigin, conditionRang);
 
-    double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.5;
+    double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.7, vc = 0.15;
 
     std::vector<Particle *> particles;
     double tmp_vals[DIM_SPACE];
@@ -88,13 +88,43 @@ int main() {
         }
     }
 
+    int times = 0;
+    int counts = 0;
+    double valVar;
+    while ((valVar = Variance(particles)) > vc || (valVar <= vc && counts < 8)) {
+        ++times;
+        if (valVar <= vc) {
+            ++counts;
+        }
+        else counts = 0;
 
+        cout << "--------- Trans ---------- " << endl;
 
+        cout << times << " C " << counts << " [Var] : " << valVar << endl;
 
+        for(auto p : particles) {
+            Vector new_velocity = p->Getvelocity() * w
+                + (p->GetbkPosition() - p->Getposition()) * c1
+                + (gBest - p->Getposition()) * c2;
 
+            p->Setvelocity(new_velocity);
+
+            Vector new_position = p->Getposition() + p->Getvelocity() * lr;
+
+            p->Setposition(new_position);
+
+            if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
+                p->SetbkPosition(new_position);
+//                cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
+                if (problem.fitness(new_position) < problem.fitness(gBest)) {
+                    gBest = p->Getposition();
+//                    cout << "UPDATE gBest: " << gBest << "\n";
+                }
             }
         }
     }
+
+    cout << gBest << problem.fitness(gBest) << "\n";
 
     return 0;
 }
