@@ -85,7 +85,7 @@ int main() {
     Problem problem(Rastrigin, conditionRang);
 
     double w = 0.8, c1 = 1.2, c2 = 0.5, lr = 0.7, vc = 0.2;
-    double vMax = 2;
+    double vMax = 1;
 
     vector<Record> allRecord;
     for(int e = 0; e < TIMES_EXP; ++e) {
