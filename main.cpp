@@ -89,7 +89,7 @@ int main() {
         }
     }
 
-    int times = 0;
+    long times = 0;
     int counts = 0;
     double valVar;
     while ((valVar = Variance(particles)) > vc || (valVar <= vc && counts < 8)) {
@@ -140,7 +140,7 @@ int main() {
         }
     }
 
-    cout << gBest << problem.fitness(gBest) << "\n";
+    cout << times * P_SIZE << "\t" << gBest << "\t" << problem.fitness(gBest) << "\n";
 
     return 0;
 }
