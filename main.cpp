@@ -8,6 +8,7 @@
 
 #define P_SIZE 7
 #define DIM_SPACE 1
+#define TIMES_EXP 100
 
 using namespace std;
 
