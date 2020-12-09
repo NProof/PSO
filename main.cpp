@@ -73,8 +73,8 @@ int main() {
     conditionRang.push_back(std::make_pair(3.0, -3.0));
     Problem problem(Rastrigin, conditionRang);
 
-    double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.7, vc = 0.15;
-    double vMax = 1.5;
+    double w = 0.8, c1 = 1.2, c2 = 0.5, lr = 0.7, vc = 0.2;
+    double vMax = 2;
 
     vector<Record> allRecord;
     for(int e = 0; e < TIMES_EXP; ++e) {
