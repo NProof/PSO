@@ -75,84 +75,84 @@ int main() {
 
     vector<Record> allRecord;
 
-    std::vector<Particle *> particles;
-    double tmp_vals[DIM_SPACE];
-    for (int x = 0; x < P_SIZE; ++x) {
-        for (int d = 0; d < DIM_SPACE; ++d) {
-            tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
+        std::vector<Particle *> particles;
+        double tmp_vals[DIM_SPACE];
+        for (int x = 0; x < P_SIZE; ++x) {
+            for (int d = 0; d < DIM_SPACE; ++d) {
+                tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
+            }
+            Vector tmp_pos(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
+            for (int d = 0; d < DIM_SPACE; ++d) {
+                tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
+            }
+            Vector tmp_vel(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
+            particles.push_back(new Particle(tmp_pos, tmp_vel));
         }
-        Vector tmp_pos(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
-        for (int d = 0; d < DIM_SPACE; ++d) {
-            tmp_vals[d] = (problem.c[d].first - problem.c[d].second) * rand() / (RAND_MAX + 1.0) + problem.c[d].second;
-        }
-        Vector tmp_vel(DIM_SPACE, vector<double>(tmp_vals, tmp_vals + DIM_SPACE));
-        particles.push_back(new Particle(tmp_pos, tmp_vel));
-    }
 
-    Vector gBest(particles[0]->Getposition());
+        Vector gBest(particles[0]->Getposition());
 
-    cout << "--------- GBest ---------- " << endl;
-
-    for(auto p : particles) {
-        Vector position = p->Getposition();
-        if (problem.fitness(position) < problem.fitness(gBest)) {
-            gBest = position;
-            cout << "UPDATE gBest: " << gBest << "\n";
-        }
-    }
-
-    long times = 0;
-    int counts = 0;
-    double valVar;
-    while ((valVar = Variance(particles)) > vc || (valVar <= vc && counts < 8)) {
-        ++times;
-        if (valVar <= vc) {
-            ++counts;
-        }
-        else counts = 0;
-
-        cout << "--------- Trans ---------- " << endl;
-
-        cout << times << " C " << counts << " [Var] : " << valVar << endl;
+        cout << "--------- GBest ---------- " << endl;
 
         for(auto p : particles) {
-            Vector new_velocity = p->Getvelocity() * w
-                + (p->GetbkPosition() - p->Getposition()) * c1
-                + (gBest - p->Getposition()) * c2;
-
-            double distV = new_velocity.euclidean_Metric();
-            if (distV > vMax) {
-                new_velocity = new_velocity * vMax / distV;
+            Vector position = p->Getposition();
+            if (problem.fitness(position) < problem.fitness(gBest)) {
+                gBest = position;
+                cout << "UPDATE gBest: " << gBest << "\n";
             }
+        }
 
-            p->Setvelocity(new_velocity);
+        long times = 0;
+        int counts = 0;
+        double valVar;
+        while ((valVar = Variance(particles)) > vc || (valVar <= vc && counts < 8)) {
+            ++times;
+            if (valVar <= vc) {
+                ++counts;
+            }
+            else counts = 0;
 
-            Vector new_position = p->Getposition() + p->Getvelocity() * lr;
-            auto c = problem.c;
-            auto new_vals = new_position.Getvals();
-            for (int d = 0; d < DIM_SPACE; ++d) {
-                if (new_vals[d] <= c[d].first && new_vals[d] >= c[d].second) ;
-                else if (new_vals[d] > c[d].first) {
-                    new_vals[d] = c[d].first;
+            cout << "--------- Trans ---------- " << endl;
+
+            cout << times << " C " << counts << " [Var] : " << valVar << endl;
+
+            for(auto p : particles) {
+                Vector new_velocity = p->Getvelocity() * w
+                    + (p->GetbkPosition() - p->Getposition()) * c1
+                    + (gBest - p->Getposition()) * c2;
+
+                double distV = new_velocity.euclidean_Metric();
+                if (distV > vMax) {
+                    new_velocity = new_velocity * vMax / distV;
                 }
-                else new_vals[d] = c[d].second;
-            }
-            new_position.Setvals(new_vals);
 
-            p->Setposition(new_position);
+                p->Setvelocity(new_velocity);
 
-            if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
-                p->SetbkPosition(new_position);
-//                cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
-                if (problem.fitness(new_position) < problem.fitness(gBest)) {
-                    gBest = p->Getposition();
-//                    cout << "UPDATE gBest: " << gBest << "\n";
+                Vector new_position = p->Getposition() + p->Getvelocity() * lr;
+                auto c = problem.c;
+                auto new_vals = new_position.Getvals();
+                for (int d = 0; d < DIM_SPACE; ++d) {
+                    if (new_vals[d] <= c[d].first && new_vals[d] >= c[d].second) ;
+                    else if (new_vals[d] > c[d].first) {
+                        new_vals[d] = c[d].first;
+                    }
+                    else new_vals[d] = c[d].second;
+                }
+                new_position.Setvals(new_vals);
+
+                p->Setposition(new_position);
+
+                if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
+                    p->SetbkPosition(new_position);
+    //                cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
+                    if (problem.fitness(new_position) < problem.fitness(gBest)) {
+                        gBest = p->Getposition();
+    //                    cout << "UPDATE gBest: " << gBest << "\n";
+                    }
                 }
             }
         }
-    }
 
-    Record r(times * P_SIZE, gBest, problem.fitness(gBest));
+        Record r(times * P_SIZE, gBest, problem.fitness(gBest));
     allRecord.push_back(r);
     cout << r._count_Fit << "\t" << r._gBest << "\t" << r._fit << "\n";
 
