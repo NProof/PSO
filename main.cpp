@@ -81,11 +81,11 @@ double Variance(std::vector<Particle *> ps) {
 
 int main() {
     std::vector<std::pair<double, double> > conditionRang;
-    conditionRang.push_back(std::make_pair(3.0, -3.0));
+    conditionRang.push_back(std::make_pair(100.0, -100.0));
     Problem problem(Rastrigin, conditionRang);
 
-    double w = 0.8, c1 = 1.2, c2 = 0.5, lr = 0.7, vc = 0.2;
-    double vMax = 2;
+    double w = 0.8, c1 = 1.2, c2 = 0.5, lr = 0.7, vc = 0.1;
+    double vMax = 200/6;
 
     vector<Record> allRecord;
     for(int e = 0; e < TIMES_EXP; ++e) {
@@ -186,7 +186,7 @@ int main() {
     }
 
     std::ofstream summaryfile;
-    summaryfile.open("summary.csv");
+    summaryfile.open("summaryAbs.csv");
 
     double mean_times = .0;
     double mean_fit = .0;
