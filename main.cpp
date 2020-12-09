@@ -12,13 +12,13 @@
 using namespace std;
 
 std::ostream & operator<<(std::ostream & os, const Vector & obj) {
-    os << "[" << obj.Getdim() << "] ";
-    os << "<";
-    for (auto v : obj.Getvals()) {
-        os << v << ", ";
+    vector<double> vals = obj.Getvals();
+    int d = 0;
+    os << "< " << vals[d];
+    for (d= 1; d < DIM_SPACE; ++d) {
+        os << ", " << vals[d];
     }
-    os << ">";
-    return os;
+    return os << " >";
 }
 
 double Rastrigin(Vector v)
