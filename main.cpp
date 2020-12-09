@@ -104,13 +104,24 @@ int main() {
 
         long times = 0;
         int counts = 0;
+        int outs = 0;
         double valVar;
         while ((valVar = Variance(particles)) > vc || (valVar <= vc && counts < 8)) {
             ++times;
             if (valVar <= vc) {
+                outs = 0;
                 ++counts;
+                if (counts % 3 == 0) {
+                    vc /= 1.25;
+                }
             }
-            else counts = 0;
+            else {
+                counts = 0;
+                ++outs;
+                if (outs % 5 == 0) {
+                    vc *= 2.0;
+                }
+            }
 
 //            cout << "--------- Trans ---------- " << endl;
 //
