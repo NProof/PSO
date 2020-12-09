@@ -55,12 +55,16 @@ int main() {
 
     Vector gBest(particles[0]->Getposition());
 
-//    cout << "--------- Trans ---------- " << endl;
+    cout << "--------- GBest ---------- " << endl;
 
     for(auto p : particles) {
-        Vector new_velocity = p->Getvelocity() * w
-            + (p->GetbkPosition() - p->Getposition()) * c1
-            + (gBest - p->Getposition()) * c2;
+        Vector position = p->Getposition();
+        if (problem.fitness(position) < problem.fitness(gBest)) {
+            gBest = position;
+            cout << "UPDATE gBest: " << gBest << "\n";
+        }
+    }
+
 
         p->Setvelocity(new_velocity);
 
