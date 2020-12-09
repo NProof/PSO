@@ -32,6 +32,29 @@ double Rastrigin(Vector v)
 	return sum_f;
 }
 
+double Variance(std::vector<Particle *> ps) {
+    double mean[DIM_SPACE] = {0};
+    for (auto p : ps) {
+        vector<double> vals = p->Getposition().Getvals();
+        for (int d = 0; d < DIM_SPACE; ++d) {
+            mean[d] += vals[d];
+        }
+    }
+    for (int d = 0; d < DIM_SPACE; ++d) {
+        mean[d] /= P_SIZE;
+    }
+    Vector vMean(DIM_SPACE, vector<double>(mean, mean + DIM_SPACE));
+    double sum = 0.0;
+    for (auto p : ps) {
+        vector<double> diffv = (p->Getposition() - vMean).Getvals();
+        for (int d = 0; d < DIM_SPACE; ++d) {
+            double vDif = diffv[d];
+            sum += vDif * vDif;
+        }
+    }
+    return sum / P_SIZE;
+}
+
 int main() {
     std::vector<std::pair<double, double> > conditionRang;
     conditionRang.push_back(std::make_pair(3.0, -3.0));
