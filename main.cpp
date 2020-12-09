@@ -179,7 +179,6 @@ int main() {
         auto r = allRecord[e];
         mean_times += r._count_Fit;
         mean_fit += r._fit;
-//        summaryfile << e + 1 << ", " << r._count_Fit << ", " << std::setprecision(20 ) << r._fit << "\n";
     }
     mean_times /= TIMES_EXP;
     mean_fit /= TIMES_EXP;
