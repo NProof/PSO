@@ -140,10 +140,14 @@ int main() {
 //
 //            cout << times << " C " << counts << " [Var] : " << valVar << endl;
 
+            double r1, r2;
+            r1 =  rand() / (RAND_MAX + 1.0);
+            r2 =  rand() / (RAND_MAX + 1.0);
+
             for(auto p : particles) {
                 Vector new_velocity = p->Getvelocity() * w
-                    + (p->GetbkPosition() - p->Getposition()) * c1
-                    + (gBest - p->Getposition()) * c2;
+                    + (p->GetbkPosition() - p->Getposition()) * c1 * r1
+                    + (gBest - p->Getposition()) * c2 * r2;
 
                 double distV = new_velocity.euclidean_Metric();
                 if (distV > vMax) {
