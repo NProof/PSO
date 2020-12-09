@@ -89,18 +89,9 @@ int main() {
     }
 
 
-        p->Setvelocity(new_velocity);
 
-        Vector new_position = p->Getposition() + p->Getvelocity() * lr;
 
-        p->Setposition(new_position);
 
-        if (problem.fitness(new_position) < problem.fitness(p->GetbkPosition())) {
-            p->SetbkPosition(new_position);
-//            cout << "UPDATE p Best: " << p->GetbkPosition() << "\n";
-            if (problem.fitness(new_position) < problem.fitness(gBest)) {
-                gBest = p->Getposition();
-//                cout << "UPDATE gBest: " << gBest << "\n";
             }
         }
     }
