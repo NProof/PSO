@@ -61,6 +61,7 @@ int main() {
     Problem problem(Rastrigin, conditionRang);
 
     double w = 0.8, c1 = 1.2, c2 = 0.6, lr = 0.7, vc = 0.15;
+    double vMax = 1.5;
 
     std::vector<Particle *> particles;
     double tmp_vals[DIM_SPACE];
