@@ -11,6 +11,16 @@
 
 using namespace std;
 
+struct Record {
+    long _count_Fit;
+    Vector _gBest;
+    double _fit;
+
+    Record(long count_Fit, Vector & gBest, double fit)
+        :_gBest(gBest), _count_Fit(count_Fit), _fit(fit){
+    }
+};
+
 std::ostream & operator<<(std::ostream & os, const Vector & obj) {
     vector<double> vals = obj.Getvals();
     int d = 0;
@@ -140,6 +150,7 @@ int main() {
         }
     }
 
+    Record r(times * P_SIZE, gBest, problem.fitness(gBest));
     cout << times * P_SIZE << "\t" << gBest << "\t" << problem.fitness(gBest) << "\n";
 
     return 0;
