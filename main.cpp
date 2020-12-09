@@ -92,13 +92,13 @@ int main() {
 
         Vector gBest(particles[0]->Getposition());
 
-        cout << "--------- GBest ---------- " << endl;
+//        cout << "--------- GBest ---------- " << endl;
 
         for(auto p : particles) {
             Vector position = p->Getposition();
             if (problem.fitness(position) < problem.fitness(gBest)) {
                 gBest = position;
-                cout << "UPDATE gBest: " << gBest << "\n";
+//                cout << "UPDATE gBest: " << gBest << "\n";
             }
         }
 
@@ -112,9 +112,9 @@ int main() {
             }
             else counts = 0;
 
-            cout << "--------- Trans ---------- " << endl;
-
-            cout << times << " C " << counts << " [Var] : " << valVar << endl;
+//            cout << "--------- Trans ---------- " << endl;
+//
+//            cout << times << " C " << counts << " [Var] : " << valVar << endl;
 
             for(auto p : particles) {
                 Vector new_velocity = p->Getvelocity() * w
@@ -156,7 +156,10 @@ int main() {
         Record r(times * P_SIZE, gBest, problem.fitness(gBest));
         allRecord.push_back(r);
     }
-    cout << r._count_Fit << "\t" << r._gBest << "\t" << r._fit << "\n";
+
+    for (auto r : allRecord) {
+        cout << r._count_Fit << "\t" << r._gBest << "\t" << r._fit << "\n";
+    }
 
     return 0;
 }
