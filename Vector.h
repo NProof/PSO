@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <vector>
+#include <cmath>
 #include <ostream>
 
 class Vector
@@ -16,6 +17,8 @@ class Vector
         void Setdim(unsigned int val) { dim = val; }
         std::vector<double> Getvals() const { return vals; }
         void Setvals(std::vector<double> val) { vals = val; }
+
+        double euclidean_Metric();
 
         friend std::ostream & operator<<(std::ostream & os, const Vector & obj);
 

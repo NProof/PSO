@@ -27,3 +27,11 @@ Vector& Vector::operator=(const Vector& rhs)
     this->vals = rhs.Getvals();
     return *this;
 }
+
+double Vector::euclidean_Metric() {
+    double sum = 0.0;
+    for (auto v : vals) {
+        sum += v * v;
+    }
+    return sqrt(sum);
+}
