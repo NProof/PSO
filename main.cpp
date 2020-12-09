@@ -108,9 +108,24 @@ int main() {
                 + (p->GetbkPosition() - p->Getposition()) * c1
                 + (gBest - p->Getposition()) * c2;
 
+            double distV = new_velocity.euclidean_Metric();
+            if (distV > vMax) {
+                new_velocity = new_velocity * vMax / distV;
+            }
+
             p->Setvelocity(new_velocity);
 
             Vector new_position = p->Getposition() + p->Getvelocity() * lr;
+            auto c = problem.c;
+            auto new_vals = new_position.Getvals();
+            for (int d = 0; d < DIM_SPACE; ++d) {
+                if (new_vals[d] <= c[d].first && new_vals[d] >= c[d].second) ;
+                else if (new_vals[d] > c[d].first) {
+                    new_vals[d] = c[d].first;
+                }
+                else new_vals[d] = c[d].second;
+            }
+            new_position.Setvals(new_vals);
 
             p->Setposition(new_position);
 
